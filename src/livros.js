@@ -1,4 +1,6 @@
 const readline = require('readline/promises');
+const Autor = require('./classes/Autor');
+const AutorCrud = require('./classes/AutorCrud');
 
 const rl = readline.createInterface({
     input: process.stdin,
@@ -11,16 +13,34 @@ async function run() {
 
     switch (resposta) {
         case 'criar':
-            /* Coloque sua resposta aqui  */
+            const nomeAutor = await rl.question("Qual o nome do autor? ")
+            
+            const autor = new Autor(nomeAutor)
+
+            const generoLiterario = await rl.question('Genero Literário?')
+            autor.setGeneroLiterario = generoLiterario
+
+            const crud = new AutorCrud()
+            crud.criar(autor)
+
+
             rl.close();
             break;
         case 'deletar': {
-            /* Coloque sua resposta aqui */
+            const codigo = await rl.question("Informe o código do autor a ser deletado.")
+
+            const crud = new AutorCrud()
+            crud.deletar(codigo)
+
             rl.close();
             break;
         }
         case 'consultar': {
-            /* Coloque sua resposta aqui */
+            const pesquisa = await rl.question('Qual autor deseja encontrar?')
+
+            const crud = new AutorCrud()
+            crud.consultar(pesquisa)
+
             rl.close();
             break;
         }
